@@ -10,13 +10,22 @@
     <link rel="icon" href="/img/Picture1.jpg">
 
     <script src="script/app.js"></script>
-    <script src="joy.js"></script>
-
+    <script src="script/joy.js"></script>
+    
     <title>Bolwerk - Emma</title>
 </head>
 <body>
-    <div id="joyDiv"></div>
+    <div class="c-container">
+        <div id="joyDiv" class="c-joystick"></div>
+        <div id="joyDiv2" class="c-joystick"></div>
+    </div>
+    
 
-    var joy = new JoyStick('joyDiv');
+	
+    <script type="text/javascript">
+        // Create JoyStick object into the DIV 'joyDiv'
+        var joy = new JoyStick('joyDiv');
+        var joy2 = new JoyStick('joyDiv2');
+    </script>
 </body>
 </html>
