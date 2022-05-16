@@ -6,7 +6,7 @@
 #Variables
 \*------------------------------------*/
 
-:root {
+/* :root { */
     /* typography */
     
 
@@ -30,7 +30,7 @@
     
     /* transitions */
     
-}
+/* } */
 
 /*------------------------------------*\
 #GENERIC
@@ -51,7 +51,7 @@ html {
     box-sizing: border-box;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background-color: var(--global-color-neutral-xxxx-light);
+    background-color: #222;
 }
 
 *,
@@ -108,9 +108,11 @@ h3 {
 
 h1 {
     /* font-size: 36px; */
-    font-size: 2.4rem;
-    line-height: calc(var(--global-baseline) * 10);
-    margin: 0 0 var(--global-whitespace-md);
+    font-size: 50px;
+    line-height: 60px;
+    font-family: wreath, serif;
+    font-weight: 500;
+    font-style: normal;
 }
 
 h2 {
@@ -321,6 +323,16 @@ input::placeholder {
 .c-joystick {
     width:200px;
     height:200px;
+}
+
+.c-header {
+    min-width: 100vw;
+    min-height: 100px;
+    background-color: white;
+    color: red;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 
