@@ -14,24 +14,42 @@
     <script src="script/app.js"></script>
     <script src="script/joy.js"></script>
     
-    <title>Bolwerk - Emma</title>
+    <!-- <title>Bolwerk - Emma</title> -->
+    <title>Controles - Emma</title>
 </head>
 <body>
-    <header class="c-header">
-        <h1>Emma</h1>
-    </header>
-
-    <div class="c-container">
-        <div id="joyDiv" class="c-joystick"></div>
-        <div id="joyDiv2" class="c-joystick"></div>
-    </div>
+    <div class="o-container">
+        <header class="c-header">
+            <h1 class="c-header--tekst">Emma</h1>
+        </header>
     
-
-	
-    <script type="text/javascript">
-        // Create JoyStick object into the DIV 'joyDiv'
-        var joy = new JoyStick('joyDiv');
-        var joy2 = new JoyStick('joyDiv2');
-    </script>
+        <div class="c-controls">
+            <h3 class="c-joystick--type">Ogen</h3>
+            <div id="joyDiv" class="c-joystick"></div>
+            <div class="c-joystick--visualization">
+                <div class="c-joystick--visualization__rechts"></div>
+            </div>
+            <div class="c-controls--button">
+                <button class="o-button-reset c-button">Knipoog Links</button>
+            </div>
+            <div class="c-controls--button">
+                <button class="o-button-reset c-button">Centreren</button>
+            </div>
+            <div class="c-controls--button">
+                <button class="o-button-reset c-button">Knipoog Rechts</button>
+            </div>
+            <div class="c-joystick--visualization">
+                <div class="c-joystick--visualization__links"></div>
+            </div>
+            <h3 class="c-joystick--type">Hoofd</h3>
+            <div id="joyDiv2" class="c-joystick"></div>
+        </div>
+        
+        <script type="text/javascript">
+            // Create JoyStick object into the DIV 'joyDiv'
+            var joy = new JoyStick('joyDiv');
+            var joy2 = new JoyStick('joyDiv2');
+        </script>
+    </div>
 </body>
 </html>
