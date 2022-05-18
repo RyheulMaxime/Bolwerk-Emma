@@ -358,7 +358,7 @@ input::placeholder {
 }
 
 .c-header--tekst{
-    margin: 1rem 0 1rem 0;
+    margin: 0;
     padding: 0;
 }
 
@@ -397,7 +397,7 @@ input::placeholder {
     /* border: 1px solid #9C9898; */
     width:10rem;
     height:10rem;
-   }
+}
 
 .c-joystick--type{
     color: #fff;
