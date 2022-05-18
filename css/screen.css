@@ -348,13 +348,15 @@ input::placeholder {
 */
 
 .c-header {
-    min-width: 100vw;
+    /* min-width: 100vw; */
     /* min-height: 15vh; */
     background-color: white;
     color: red;
-    display: flex;
+    display: grid;
     align-items: center;
     justify-content: center;
+    margin: 0;
+    padding: 0;
 }
 
 .c-header--tekst{
@@ -395,8 +397,8 @@ input::placeholder {
 
 #joystick {
     /* border: 1px solid #9C9898; */
-    width:10rem;
-    height:10rem;
+    /* width:10rem;
+    height:10rem; */
 }
 
 .c-joystick--type{
