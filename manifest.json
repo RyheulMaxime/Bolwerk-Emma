@@ -4,7 +4,7 @@
     "theme_color": "#e2e4e6",
     "icons": [
         {
-          "src": "/img/1x/Asset-logo.png",
+          "src": "/Asset-logo.png",
           "type": "image/png",
           "sizes": "300x300"
         }
