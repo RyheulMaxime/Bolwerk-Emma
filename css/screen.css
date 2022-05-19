@@ -395,12 +395,6 @@ input::placeholder {
     grid-column: span 2;
 }
 
-#joystick {
-    /* border: 1px solid #9C9898; */
-    /* width:10rem;
-    height:10rem; */
-}
-
 .c-joystick--type{
     color: #fff;
     grid-row: 1;

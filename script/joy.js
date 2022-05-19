@@ -32,7 +32,7 @@
          internalFillColor = (typeof parameters.internalFillColor === "undefined" ? "#AA0000" : parameters.internalFillColor),
          internalLineWidth = (typeof parameters.internalLineWidth === "undefined" ? 2 : parameters.internalLineWidth),
          internalStrokeColor = (typeof parameters.internalStrokeColor === "undefined" ? "#AA0000" : parameters.internalStrokeColor),
-         externalLineWidth = (typeof parameters.externalLineWidth === "undefined" ? 2 : parameters.externalLineWidth),
+         externalLineWidth = (typeof parameters.externalLineWidth === "undefined" ? 4 : parameters.externalLineWidth),
          externalStrokeColor = (typeof parameters.externalStrokeColor ===  "undefined" ? "#800000" : parameters.externalStrokeColor),
          autoReturnToCenter = (typeof parameters.autoReturnToCenter === "undefined" ? true : parameters.autoReturnToCenter);
  
