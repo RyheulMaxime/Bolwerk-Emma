@@ -24,7 +24,6 @@ document.addEventListener('DOMContentLoaded', function() {
         screen.orientation.lock('landscape');
     })  
     
-
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('./serviceWorker.js')
         .then(function(registration) {
