@@ -7,7 +7,20 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const btnfull =  document.querySelector(".js-button-full")
     btnfull.addEventListener("click",function(){
-        document.documentElement.webkitRequestFullScreen();
+        let elem = document.documentElement;
+        
+        if (elem.requestFullscreen) {
+            elem.requestFullscreen();
+          } else if (elem.mozRequestFullScreen) { /* Firefox */
+            elem.mozRequestFullScreen();
+          } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+            elem.webkitRequestFullscreen();
+          } else if (elem.msRequestFullscreen) { /* IE/Edge */
+            elem.msRequestFullscreen();
+          }
+        
+        // document.documentElement.webkitRequestFullScreen();
+        screen.orientation.lock('landscape');
     })  
     
     
