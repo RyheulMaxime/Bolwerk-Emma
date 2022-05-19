@@ -4,11 +4,12 @@
 
 document.addEventListener('DOMContentLoaded', function() {
     // document.documentElement.webkitRequestFullScreen();
+    var joy = new JoyStick('joyDiv');
+    var joy2 = new JoyStick('joyDiv2');
 
     const btnfull =  document.querySelector(".js-button-full")
     btnfull.addEventListener("click",function(){
         let elem = document.documentElement;
-        
         if (elem.requestFullscreen) {
             elem.requestFullscreen();
           } else if (elem.mozRequestFullScreen) { /* Firefox */
