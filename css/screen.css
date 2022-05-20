@@ -469,19 +469,24 @@ input::placeholder {
 }
 
 .c-button:focus {
-    border-color: var(--button-hover-borderColor);
-    background-color: var(--button-hover-backgroundColor);
+    border-color: var(--button-hover-backgroundColor);
+    /* border-color: var(--button-text-color); */
+    background-color: var(--button-text-color);
     color: var(--button-hover-textColor);
     box-shadow: var(--global-button-focus-boxShadowSpread) var(--button-focus-boxShadowColor, var(--global-button-focus-boxShadowColor));
 }
 
 .c-button:active {
-    border-color: var(--button-hover-borderColor);
-    background-color: var(--button-hover-backgroundColor);
+    border-color: var(--button-hover-backgroundColor);
+    background-color: var(--button-text-color);
     color: var(--button-hover-textColor);
     box-shadow: var(--button-active-boxShadow, 0);
 }
 
+.active {
+    background-color: #666;
+    color: white;
+}
 
 
 /*------------------------------------*\

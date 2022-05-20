@@ -7,6 +7,22 @@ document.addEventListener('DOMContentLoaded', function() {
     var joy = new JoyStick('joyDiv');
     var joy2 = new JoyStick('joyDiv2');
 
+    var btn_wink_left = document.querySelector(".js-wink-left")
+    var btn_wink_right = document.querySelector(".js-wink-right")
+
+    btn_wink_left.addEventListener("click", function() {
+      if (btn_wink_left.classList.contains("active")) {
+        btn_wink_left.classList.remove("active");
+      } else btn_wink_left.classList.add("active");
+    }); 
+    
+    btn_wink_right.addEventListener("click", function() {
+      if (btn_wink_right.classList.contains("active")) {
+        btn_wink_right.classList.remove("active");
+      } else btn_wink_right.classList.add("active");
+    }); 
+
+
     // const btnfull =  document.querySelector(".js-button-full")
     // btnfull.addEventListener("click",function(){
     //     let elem = document.documentElement;
