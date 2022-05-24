@@ -10,11 +10,10 @@
     <link rel="stylesheet" href="https://use.typekit.net/inj0cjg.css">
     <link rel="manifest" href="manifest.json">
 
-
     <link rel="icon" href="./img/logo.png">
-
-    <script src="script/app.js"></script>
     <script src="script/joy.js"></script>
+    <script src="script/p5.js"></script>
+    <script src="script/app.js"></script>
     
     <!-- <title>Bolwerk - Emma</title> -->
     <title>Controles - Emma</title>
@@ -27,10 +26,10 @@
         </header>
     
         <div class="c-controls">
-            <h3 class="c-joystick--type">Ogen</h3>
+            <h3 class="c-joystick--type">Hoofd</h3>
             <div id="joyDiv" class="c-joystick"></div>
-            <div class="c-joystick--visualization">
-                <div class="c-joystick--visualization__rechts"></div>
+            <div class="c-head js-head" id="js-head">
+                <!-- <script src="script/head.js"></script> -->
             </div>
             <div class="c-controls--button">
                 <button class="o-button-reset c-button js-wink-left">Knipoog Links</button>
@@ -41,10 +40,7 @@
             <div class="c-controls--button">
                 <button class="o-button-reset c-button js-wink-right">Knipoog Rechts</button>
             </div>
-            <div class="c-joystick--visualization">
-                <div class="c-joystick--visualization__links"></div>
-            </div>
-            <h3 class="c-joystick--type">Hoofd</h3>
+            <h3 class="c-joystick--type--ogen">Ogen</h3>
             <div id="joyDiv2" class="c-joystick"></div>
         </div>
         
