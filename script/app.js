@@ -3,6 +3,9 @@
 
 let head;
 
+var position_x = 0
+var position_y = 0
+
 function preload() {
     head = loadModel('img/FemaleHead.obj');    
 }
@@ -25,7 +28,8 @@ function draw() {
     translate(0,60);
     scale(7); // Scaled to make model fit into canvas
     rotateX(1.40);
-    // rotateY(frameCount * 0.01);
+    rotateX(position_x)
+    rotateY(position_y);
     normalMaterial(); // For effect
     model(head);
 }
