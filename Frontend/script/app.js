@@ -1,5 +1,40 @@
 // element.requeestFullscreen()
 // JavaScript
+
+let head;
+
+var position_x = 0
+var position_y = 0
+
+function preload() {
+    head = loadModel('img/FemaleHead.obj');    
+}
+
+var sketchWidth;
+var sketchHeight;
+
+function setup() {
+    // createCanvas(500, 500, WEBGL);?
+    sketchWidth = document.getElementById("js-head").offsetWidth;
+    sketchHeight = document.getElementById("js-head").offsetHeight;
+    let renderer = createCanvas(sketchWidth, sketchHeight, WEBGL);
+    renderer.parent("js-head");
+}
+
+
+function draw() {
+    background(200);
+    // rectMode(CENTER);
+    translate(0,60);
+    scale(7); // Scaled to make model fit into canvas
+    rotateX(1.40);
+    rotateX(position_x)
+    rotateY(position_y);
+    normalMaterial(); // For effect
+    model(head);
+}
+
+
 let getAPI = async () => {
 
 
