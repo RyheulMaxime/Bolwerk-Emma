@@ -13,33 +13,31 @@ document.addEventListener('DOMContentLoaded', function() {
     var joy = new JoyStick('joyDiv');
     var joy2 = new JoyStick('joyDiv2');
 
-    setInterval(function(){ 
-      var joy2_X = joy2.GetX(); 
-      if (joy2_X >= 10 || joy2_X <= -10){
-        console.log("X " +joy2_X)
-      }
-    }, 100);
-    
-    setInterval(function(){ 
-      var joy2_Y = joy2.GetY(); 
-      if (joy2_Y >= 10 || joy2_Y <= -10){
-        console.log("Y "+ joy2_Y)
-      }
-    }, 100);
-    
+    var prevX1 = -1;
+    var prevY1 = -1;
+    var prevX2 = -1;
+    var prevY2 = -1;
+
     setInterval(function(){ 
       var joy_X = joy.GetX(); 
-      if (joy_X >= 10 || joy_X <= -10){
-        console.log("X " + joy_X)
+      var joy_Y = joy.GetY();
+      if(joy_X != prevX1 || joy_Y != prevY1) {
+        console.log("Joy1 = X " + joy_X + " | Y " + joy_Y)
       }
+
+      var joy2_X = joy2.GetX(); 
+      var joy2_Y = joy2.GetY();
+      if(joy2_X != prevX2 || joy2_Y != prevY2) {
+        console.log("Joy2 = X " + joy2_X + " | Y " + joy2_Y)
+      }
+
+      prevX1 = joy_X;
+      prevY1 = joy_Y;
+      prevX2 = joy2_X;
+      prevY2 = joy2_Y;
     }, 100);
     
-    setInterval(function(){ 
-      var joy_Y = joy.GetY(); 
-      if (joy_Y >= 10 || joy_Y <= -10){
-        console.log("Y "+joy_Y)
-      }
-    }, 100);
+    
 
     var btn_wink_left = document.querySelector(".js-wink-left")
     var btn_wink_right = document.querySelector(".js-wink-right")
