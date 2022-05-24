@@ -51,8 +51,9 @@
     --button-hover-backgroundColor:var(--global-color-beta);
     --button-hover-borderColor:var(--button-text-color);
     --button-hover-textColor:var(--text-color-beta);
-    --global-button-focus-boxShadowSpread: 0 0 0 3px;
-    --global-button-focus-boxShadowColor: var(--global-color-alpha-500-a30);
+    --button-focus-bordercollor:var(--global-color-beta);
+    --global-button-focus-boxShadowSpread:  0 2px 3px var(--global-color-alpha);
+    --global-button-focus-boxShadowColor: var(--global-color-alpha);
     
     
 }
@@ -469,11 +470,8 @@ input::placeholder {
 }
 
 .c-button:focus {
-    border-color: var(--button-hover-backgroundColor);
-    /* border-color: var(--button-text-color); */
-    background-color: var(--button-text-color);
-    color: var(--button-hover-textColor);
-    box-shadow: var(--global-button-focus-boxShadowSpread) var(--button-focus-boxShadowColor, var(--global-button-focus-boxShadowColor));
+    border-color: var(--button-focus-bordercollor);
+    box-shadow: var(--global-button-focus-boxShadowSpread) var(--global-button-focus-boxShadowColor);
 }
 
 .c-button:active {

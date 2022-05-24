@@ -1,11 +1,45 @@
 // element.requeestFullscreen()
 // JavaScript
+let getAPI = async () => {
+
+
+    
+};
+
 
 
 document.addEventListener('DOMContentLoaded', function() {
     // document.documentElement.webkitRequestFullScreen();
     var joy = new JoyStick('joyDiv');
     var joy2 = new JoyStick('joyDiv2');
+
+    setInterval(function(){ 
+      var joy2_X = joy2.GetX(); 
+      if (joy2_X >= 10 || joy2_X <= -10){
+        console.log("X " +joy2_X)
+      }
+    }, 100);
+    
+    setInterval(function(){ 
+      var joy2_Y = joy2.GetY(); 
+      if (joy2_Y >= 10 || joy2_Y <= -10){
+        console.log("Y "+ joy2_Y)
+      }
+    }, 100);
+    
+    setInterval(function(){ 
+      var joy_X = joy.GetX(); 
+      if (joy_X >= 10 || joy_X <= -10){
+        console.log("X " + joy_X)
+      }
+    }, 100);
+    
+    setInterval(function(){ 
+      var joy_Y = joy.GetY(); 
+      if (joy_Y >= 10 || joy_Y <= -10){
+        console.log("Y "+joy_Y)
+      }
+    }, 100);
 
     var btn_wink_left = document.querySelector(".js-wink-left")
     var btn_wink_right = document.querySelector(".js-wink-right")
