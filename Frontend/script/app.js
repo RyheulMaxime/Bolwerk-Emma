@@ -1,16 +1,17 @@
-// element.requeestFullscreen()
-// JavaScript
-let getAPI = async () => {
+'use strict';
 
+//#region ***  DOM references                           ***********
+//#endregion
 
-    
-};
+//#region ***  Callback-Visualisation - show___         ***********
+//#endregion
 
+//#region ***  Callback-No Visualisation - callback___  ***********
+//#endregion
 
-
-document.addEventListener('DOMContentLoaded', function() {
-    // document.documentElement.webkitRequestFullScreen();
-    var joy = new JoyStick('joyDiv');
+//#region ***  Data Access - get___                     ***********
+const getInput = function() {
+  var joy = new JoyStick('joyDiv');
     var joy2 = new JoyStick('joyDiv2');
 
     var prevX1 = -1;
@@ -53,23 +54,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }); 
 
 
-    // const btnfull =  document.querySelector(".js-button-full")
-    // btnfull.addEventListener("click",function(){
-    //     let elem = document.documentElement;
-    //     if (elem.requestFullscreen) {
-    //         elem.requestFullscreen();
-    //       } else if (elem.mozRequestFullScreen) { /* Firefox */
-    //         elem.mozRequestFullScreen();
-    //       } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
-    //         elem.webkitRequestFullscreen();
-    //       } else if (elem.msRequestFullscreen) { /* IE/Edge */
-    //         elem.msRequestFullscreen();
-    //       }
-        
-    //     // document.documentElement.webkitRequestFullScreen();
-    //     screen.orientation.lock('landscape');
-    // })  
-    
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('./serviceWorker.js')
         .then(function(registration) {
@@ -80,5 +64,21 @@ document.addEventListener('DOMContentLoaded', function() {
           console.log('ServiceWorker registration failed: ', err);
         });
     }
-    
+}
+//#endregion
+
+//#region ***  Event Listeners - listenTo___            ***********
+//#endregion
+
+//#region ***  Init / DOMContentLoaded                  ***********
+
+
+//#endregion
+const init = function () {
+  getInput()
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM content loaded');
+    init();    
 });
