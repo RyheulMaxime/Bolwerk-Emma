@@ -21,7 +21,6 @@ function setup() {
     renderer.parent("js-head");
 }
 
-
 function draw() {
     background(200);
     // rectMode(CENTER);
@@ -30,17 +29,15 @@ function draw() {
     rotateX(1.40);
     rotateX(position_x)
     rotateY(position_y);
+    rotateZ(- position_y)
     normalMaterial(); // For effect
     model(head);
 }
 
 
 let getAPI = async () => {
-
-
     
 };
-
 
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -58,6 +55,25 @@ document.addEventListener('DOMContentLoaded', function() {
       var joy_Y = joy.GetY();
       if(joy_X != prevX1 || joy_Y != prevY1) {
         console.log("Joy1 = X " + joy_X + " | Y " + joy_Y)
+        
+        if (joy_Y < 0 && position_x > -0.25){
+          position_x += joy_Y * 0.001;
+        }
+        if (joy_Y > 0 && position_x < 0.35){
+          position_x += joy_Y * 0.001;
+        }
+        
+        if (joy_X < 0 && position_y > -0.25){
+          position_y += joy_X * 0.001;
+        }
+        if (joy_X > 0 && position_y < 0.25){
+          position_y += joy_X * 0.001;
+        }
+        // position_x += joy_Y * 0.001;
+        console.log(position_x)
+        console.log(position_y)
+        // position_y += joy_X * 0.001;
+        redraw()
       }
 
       var joy2_X = joy2.GetX(); 
