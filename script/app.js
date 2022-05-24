@@ -1,10 +1,47 @@
 // element.requeestFullscreen()
 // JavaScript
+
+let head;
+
+var position_x = 0
+var position_y = 0
+
+function preload() {
+    head = loadModel('img/FemaleHead.obj');    
+}
+
+var sketchWidth;
+var sketchHeight;
+
+function setup() {
+    // createCanvas(500, 500, WEBGL);?
+    sketchWidth = document.getElementById("js-head").offsetWidth;
+    sketchHeight = document.getElementById("js-head").offsetHeight;
+    let renderer = createCanvas(sketchWidth, sketchHeight, WEBGL);
+    renderer.parent("js-head");
+}
+
+
+function draw() {
+    background(200);
+    // rectMode(CENTER);
+    translate(0,60);
+    scale(7); // Scaled to make model fit into canvas
+    rotateX(1.40);
+    rotateX(position_x)
+    rotateY(position_y);
+    normalMaterial(); // For effect
+    model(head);
+}
+
+
+
 let getAPI = async () => {
 
 
     
 };
+
 
 
 
@@ -55,24 +92,6 @@ document.addEventListener('DOMContentLoaded', function() {
         btn_wink_right.classList.remove("active");
       } else btn_wink_right.classList.add("active");
     }); 
-
-
-    // const btnfull =  document.querySelector(".js-button-full")
-    // btnfull.addEventListener("click",function(){
-    //     let elem = document.documentElement;
-    //     if (elem.requestFullscreen) {
-    //         elem.requestFullscreen();
-    //       } else if (elem.mozRequestFullScreen) { /* Firefox */
-    //         elem.mozRequestFullScreen();
-    //       } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
-    //         elem.webkitRequestFullscreen();
-    //       } else if (elem.msRequestFullscreen) { /* IE/Edge */
-    //         elem.msRequestFullscreen();
-    //       }
-        
-    //     // document.documentElement.webkitRequestFullScreen();
-    //     screen.orientation.lock('landscape');
-    // })  
     
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('./serviceWorker.js')
@@ -84,5 +103,6 @@ document.addEventListener('DOMContentLoaded', function() {
           console.log('ServiceWorker registration failed: ', err);
         });
     }
-    
-});
+
+})
+
