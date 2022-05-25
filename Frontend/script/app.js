@@ -7,6 +7,7 @@ var position_x = 0
 var position_y = 0
 
 function preload() {
+    // head = loadModel('img/thanos.obj');    
     head = loadModel('img/FemaleHead.obj');    
 }
 
@@ -31,24 +32,40 @@ function setup() {
   // console.log(sketchWidth)
   // console.log(sketchHeight)
   // console.log(size_head)
-  let renderer = createCanvas(sketchWidth, sketchHeight, WEBGL);
+  var renderer = createCanvas(sketchWidth, sketchHeight, WEBGL);
   renderer.parent("js-head");
+  
 }
 
 
 function draw() {
-    background('#222');
-    stroke('magenta');
-    let c = color('magenta');
-    fill(c);
-    // rectMode(CENTER);
+  // ambientLight(255,0,0);   
+  pointLight(255,255,255,10,-100,150);   
+  background('#222');
+    
+    // box(25);
+    
+    rectMode(CENTER);
     translate(0,movement_down);
     scale(size_head); // Scaled to make model fit into canvas
+    // scale(20); // Scaled to make model fit into canvas
     rotateX(1.40);
     rotateX(position_x)
     rotateY(position_y);
     rotateZ(- position_y)
-    normalMaterial(); // For effect
+    
+    
+    // rotateZ(3.15)
+    
+    // ambientLight(255,0,0);
+    // ambientMaterial(255, 102, 94);
+    // ambientLight(255, 255, 255); 
+    // ambientMaterial(255, 255, 255); 
+    
+    noStroke();
+    ambientMaterial(255,255,255); 
+    // ambientLight(100);
+    // normalMaterial(); // For effect
     model(head);
 }
 
@@ -88,8 +105,8 @@ document.addEventListener('DOMContentLoaded', function() {
           position_y += joy_X * 0.001;
         }
         // position_x += joy_Y * 0.001;
-        console.log(position_x)
-        console.log(position_y)
+        // console.log(position_x)
+        // console.log(position_y)
         // position_y += joy_X * 0.001;
         redraw()
       }
