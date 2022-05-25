@@ -12,7 +12,7 @@ function preload() {
 
 var sketchWidth;
 var sketchHeight;
-var size
+var size_head
 var movement_down 
 
 function setup() {
@@ -20,28 +20,30 @@ function setup() {
   sketchWidth = document.getElementById("js-head").offsetWidth;
   sketchHeight = document.getElementById("js-head").offsetHeight;
   if(sketchWidth > sketchHeight){
-    size = sketchHeight / 30
+    size_head = sketchHeight / 30
     movement_down = sketchHeight / 3.4
   }
   
   if(sketchWidth < sketchHeight){
-    size = sketchWidth / 30
+    size_head = sketchWidth / 30
     movement_down = sketchHeight / 5
   }
-  console.log(sketchWidth)
-  console.log(sketchHeight)
-  // size = sketchHeight / 100 + sketchWidth /300
-  console.log(size)
+  // console.log(sketchWidth)
+  // console.log(sketchHeight)
+  // console.log(size_head)
   let renderer = createCanvas(sketchWidth, sketchHeight, WEBGL);
   renderer.parent("js-head");
 }
 
 
 function draw() {
-    background(200);
+    background('#222');
+    stroke('magenta');
+    let c = color('magenta');
+    fill(c);
     // rectMode(CENTER);
     translate(0,movement_down);
-    scale(size); // Scaled to make model fit into canvas
+    scale(size_head); // Scaled to make model fit into canvas
     rotateX(1.40);
     rotateX(position_x)
     rotateY(position_y);
