@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="css/normalize.css" />
+	<link rel="stylesheet" href="css/screen.css" />
+    <link rel="stylesheet" href="https://use.typekit.net/inj0cjg.css">
+    <link rel="manifest" href="manifest.json">
+
+    <link rel="icon" href="./img/logo.png">
+    <script src="script/joy.js"></script>
+    <script src="script/p5.js"></script>
+    <script src="script/app.js"></script>
+    
+    <!-- <title>Bolwerk - Emma</title> -->
+    <title>Controles - Emma</title>
+</head>
+<body>
+    <div class="o-container">
+        <header class="c-header">
+            <h1 class="c-header--tekst">Emma</h1>
+            <!-- <button class="c-header--button js-button-full" >Full screen</button> -->
+        </header>
+        <div class="c-instellingen"></div>
+    
+        <div class="c-controls">
+            <p class="c-controls--wink">Knipogen</p>
+            <div class="c-controls--button_wink">
+                <button class="o-button-reset c-button js-wink-left">Links</button>
+            </div>
+            <div class="c-controls--button_wink">
+                <button class="o-button-reset c-button js-wink-both">Beide</button>
+            </div>
+            <div class="c-controls--button_wink">
+                <button class="o-button-reset c-button js-wink-right">Rechts</button>
+            </div>
+            <h3 class="c-joystick--type--hoofd">Hoofd</h3>
+            <div id="joyDiv" class="c-joystick"></div>
+
+            <div class="c-head js-head" id="js-head"></div>
+            <p class="c-controls--position">Positie Hoofd</p>
+            <div class="c-controls--button_position">
+                <button class="o-button-reset c-button js-center-head">Centreren</button>
+            </div> 
+            <h3 class="c-joystick--type--ogen">Ogen</h3>
+            <div id="joyDiv2" class="c-joystick--ogen">
+            </div>
+        </div>
+        
+    </div>
+</body>
+</html>
