@@ -1,6 +1,5 @@
 // element.requeestFullscreen()
 // JavaScript
-
 let head;
 
 var position_x = 0
@@ -34,39 +33,29 @@ function setup() {
   // console.log(size_head)
   var renderer = createCanvas(sketchWidth, sketchHeight, WEBGL);
   renderer.parent("js-head");
-  
 }
-
 
 function draw() {
   // ambientLight(255,0,0);   
   pointLight(255,255,255,10,-100,150);   
+  // pointLight(100,0,255,10,-50,100);  // kleur thanos 
   background('#222');
     
-    // box(25);
-    
-    rectMode(CENTER);
-    translate(0,movement_down);
-    scale(size_head); // Scaled to make model fit into canvas
-    // scale(20); // Scaled to make model fit into canvas
-    rotateX(1.40);
-    rotateX(position_x)
-    rotateY(position_y);
-    rotateZ(- position_y)
-    
-    
-    // rotateZ(3.15)
-    
-    // ambientLight(255,0,0);
-    // ambientMaterial(255, 102, 94);
-    // ambientLight(255, 255, 255); 
-    // ambientMaterial(255, 255, 255); 
-    
-    noStroke();
-    ambientMaterial(255,255,255); 
-    // ambientLight(100);
-    // normalMaterial(); // For effect
-    model(head);
+  rectMode(CENTER);
+  translate(0,movement_down);
+  scale(size_head); // Scaled to make model fit into canvas
+  // scale(20); // Scaled to make thanos fit into canvas
+  rotateX(1.40);
+  rotateX(position_x)
+  rotateY(position_y);
+  rotateZ(- position_y)    
+  // rotateZ(3.15) // rotation thanos
+  
+  noStroke();
+  ambientMaterial(255,255,255); 
+  // ambientLight(100);
+  // normalMaterial(); // For effect
+  model(head);
 }
 
 
@@ -90,26 +79,22 @@ document.addEventListener('DOMContentLoaded', function() {
       var joy_Y = joy.GetY();
       if(joy_X != prevX1 || joy_Y != prevY1) {
         console.log("Joy1 = X " + joy_X + " | Y " + joy_Y)
-        
-        if (joy_Y < 0 && position_x > -0.25){
-          position_x += joy_Y * 0.001;
-        }
-        if (joy_Y > 0 && position_x < 0.35){
-          position_x += joy_Y * 0.001;
-        }
-        
-        if (joy_X < 0 && position_y > -0.25){
-          position_y += joy_X * 0.001;
-        }
-        if (joy_X > 0 && position_y < 0.25){
-          position_y += joy_X * 0.001;
-        }
-        // position_x += joy_Y * 0.001;
-        // console.log(position_x)
-        // console.log(position_y)
-        // position_y += joy_X * 0.001;
-        redraw()
       }
+
+      if (joy_Y < 0 && position_x > -0.25){
+        position_x += joy_Y * 0.0005;
+      }
+      if (joy_Y > 0 && position_x < 0.35){
+        position_x += joy_Y * 0.0005;
+      }
+      
+      if (joy_X < 0 && position_y > -0.25){
+        position_y += joy_X * 0.0005;
+      }
+      if (joy_X > 0 && position_y < 0.25){
+        position_y += joy_X * 0.0005;
+      }
+      redraw()
 
       var joy2_X = joy2.GetX(); 
       var joy2_Y = joy2.GetY();
