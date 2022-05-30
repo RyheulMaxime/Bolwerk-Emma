@@ -403,26 +403,36 @@ input::placeholder {
 
 .c-controls--wink{
     grid-row: 1;
-    grid-column: 1 / span 3;
+    grid-column: 5 / span 3;
     color: var(--global-text-color);
     margin: 0;
 }
 
 .c-controls--position{
     grid-row: 1;
-    grid-column: 5 / span 3;
+    grid-column: 1 / span 3;
     color: var(--global-text-color);
     margin: 0;
 }
 
-.c-controls--button_wink{
+.c-controls--button_wink_left{
     grid-row: 2;
-    /* grid-column: span 2; */
+    grid-column: 5;
+}
+
+.c-controls--button_wink_both{
+    grid-row: 2;
+    grid-column: 6;
+}
+
+.c-controls--button_wink_right{
+    grid-row: 2;
+    grid-column: 7;
 }
 
 .c-controls--button_position{
     grid-row: 2;
-    grid-column: 5 /span 3;
+    grid-column: 1 /span 3;
 }
 
 .c-joystick {
