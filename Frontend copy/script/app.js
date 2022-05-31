@@ -69,7 +69,7 @@ function draw() {
     rotateX(1.40);
     rotateX(position_x)
     rotateY(position_y);
-    rotateZ(- position_y)    
+    rotateZ( position_y)    
     // rotateZ(3)
     rotateZ(3.15) // rotation thanos
     
@@ -143,11 +143,12 @@ document.addEventListener('DOMContentLoaded', function() {
         prevX2 = joy2_X;
         prevY2 = joy2_Y;
       }
+
       if(inverted == true){
         if(joy_X != prevX1 || joy_Y != prevY1) {
           console.log("Joy1 = X " + joy_X + " | Y " + joy_Y)
         }
-
+ 
         if (joy_Y < 0 && - position_x > -0.25){
           position_x += - joy_Y * 0.0005;
         }
@@ -155,11 +156,11 @@ document.addEventListener('DOMContentLoaded', function() {
           position_x += - joy_Y * 0.0005;
         }
         
-        if (joy_X < 0 && - position_y > -0.25){
-          position_y += - joy_X * 0.0005;
+        if (joy_X < 0 &&  position_y > -0.25){
+          position_y +=  joy_X * 0.0005;
         }
-        if (joy_X > 0 && - position_y < 0.25){
-          position_y += - joy_X * 0.0005;
+        if (joy_X > 0 &&  position_y < 0.25){
+          position_y +=  joy_X * 0.0005;
         }
         redraw()
 
