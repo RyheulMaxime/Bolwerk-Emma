@@ -95,12 +95,14 @@ async function wink(button){ //must be async func
   button.classList.remove("active")
 }
 
+var joyParam = { "title": "joystick1" };
+var joy2Param = { "title": "joystick2", "autoReturnToCenter": false };
+var joy = new JoyStick('joyDiv',joyParam);
+var joy2 = new JoyStick('joyDiv2',joy2Param);
+
 document.addEventListener('DOMContentLoaded', function() {
     // document.documentElement.webkitRequestFullScreen();
-    var joyParam = { "title": "joystick1" };
-    var joy2Param = { "title": "joystick2", "autoReturnToCenter": false };
-    var joy = new JoyStick('joyDiv',joyParam);
-    var joy2 = new JoyStick('joyDiv2',joy2Param);
+    
  
     var prevX1 = -1;
     var prevY1 = -1;
