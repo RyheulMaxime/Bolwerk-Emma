@@ -98,10 +98,8 @@ async function wink(button){ //must be async func
 document.addEventListener('DOMContentLoaded', function() {
     // document.documentElement.webkitRequestFullScreen();
     var joyParam = { "title": "joystick"};
-    var joy2Param = { "title": "joystick2", "autoReturnToCenter": false };
     var joy = new JoyStick('joyDiv',joyParam);
-    var joy2 = new JoyStick('joyDiv2',joy2Param);
- 
+  
     var prevX1 = -1;
     var prevY1 = -1;
     var prevX2 = -1;
@@ -158,7 +156,9 @@ document.addEventListener('DOMContentLoaded', function() {
         prevY1 = joy_Y;
       }
     }, 100);
-
+    
+    var joy2Param = { "title": "joystick2", "autoReturnToCenter": false };
+    var joy2 = new JoyStick('joyDiv2',joy2Param);
     setInterval(function(){ 
       if(inverted == false){
         var joy2_X = joy2.GetX(); 
