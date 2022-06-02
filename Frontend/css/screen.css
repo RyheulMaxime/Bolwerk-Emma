@@ -576,7 +576,7 @@ input::placeholder {
 }
 
 .c-button:focus {
-    border-color: var(--button-focus-bordercollor);
+    /* border-color: var(--button-focus-bordercollor); */
     box-shadow: var(--global-button-focus-boxShadowSpread) var(--global-button-focus-boxShadowColor);
 }
 
