@@ -97,29 +97,32 @@ async function wink(button){ //must be async func
 
 document.addEventListener('DOMContentLoaded', function() {
     // document.documentElement.webkitRequestFullScreen();
-    var joyParam = { "title": "joystick"};
-    var joy = new JoyStick('joyDiv',joyParam);
+    // var joyParam = { "title": "joystick"};
+    // var joy = new JoyStick('joyDiv',joyParam);
   
     var prevX1 = -1;
     var prevY1 = -1;
     var prevX2 = -1;
     var prevY2 = -1;
 
-    setInterval(function(){ 
-      var joy_X = joy.GetX(); 
-      var joy_Y = joy.GetY();
+    var Joy1 = new JoyStick('joyDiv', {}, function(stickData) {
+      // joy1IinputPosX.value = stickData.xPosition;
+      // joy1InputPosY.value = stickData.yPosition;
+      // joy1Direzione.value = stickData.cardinalDirection;
+      // joy1X.value = stickData.x;
+      // joy1Y.value = stickData.y;
+      var joy_X = stickData.x; 
+      var joy_Y = stickData.y;
       if(inverted == false){
         if(joy_X != prevX1 || joy_Y != prevY1) {
           console.log("Joy1 = X " + joy_X + " | Y " + joy_Y)
         }
-
         if (joy_Y < 0 && position_x > -0.25){
           position_x += joy_Y * 0.0005;
         }
         if (joy_Y > 0 && position_x < 0.35){
           position_x += joy_Y * 0.0005;
         }
-        
         if (joy_X < 0 && position_y > -0.25){
           position_y += joy_X * 0.0005;
         }
@@ -131,19 +134,16 @@ document.addEventListener('DOMContentLoaded', function() {
         prevX1 = joy_X;
         prevY1 = joy_Y;
       }
-
       if(inverted == true){
         if(joy_X != prevX1 || joy_Y != prevY1) {
           console.log("Joy1 = X " + joy_X + " | Y " + joy_Y)
         }
- 
         if (joy_Y < 0 && - position_x > -0.25){
           position_x += - joy_Y * 0.0005;
         }
         if (joy_Y > 0 && - position_x < 0.35){
           position_x += - joy_Y * 0.0005;
         }
-        
         if (joy_X < 0 &&  position_y > -0.25){
           position_y +=  joy_X * 0.0005;
         }
@@ -155,14 +155,61 @@ document.addEventListener('DOMContentLoaded', function() {
         prevX1 = joy_X;
         prevY1 = joy_Y;
       }
-    }, 100);
+    });
+    
+    // setInterval(function(){ 
+    //   var joy_X = joy.GetX(); 
+    //   var joy_Y = joy.GetY();
+    //   if(inverted == false){
+    //     if(joy_X != prevX1 || joy_Y != prevY1) {
+    //       console.log("Joy1 = X " + joy_X + " | Y " + joy_Y)
+    //     }
+    //     if (joy_Y < 0 && position_x > -0.25){
+    //       position_x += joy_Y * 0.0005;
+    //     }
+    //     if (joy_Y > 0 && position_x < 0.35){
+    //       position_x += joy_Y * 0.0005;
+    //     }
+    //     if (joy_X < 0 && position_y > -0.25){
+    //       position_y += joy_X * 0.0005;
+    //     }
+    //     if (joy_X > 0 && position_y < 0.25){
+    //       position_y += joy_X * 0.0005;
+    //     }
+    //     redraw()
+
+    //     prevX1 = joy_X;
+    //     prevY1 = joy_Y;
+    //   }
+    //   if(inverted == true){
+    //     if(joy_X != prevX1 || joy_Y != prevY1) {
+    //       console.log("Joy1 = X " + joy_X + " | Y " + joy_Y)
+    //     }
+    //     if (joy_Y < 0 && - position_x > -0.25){
+    //       position_x += - joy_Y * 0.0005;
+    //     }
+    //     if (joy_Y > 0 && - position_x < 0.35){
+    //       position_x += - joy_Y * 0.0005;
+    //     }
+    //     if (joy_X < 0 &&  position_y > -0.25){
+    //       position_y +=  joy_X * 0.0005;
+    //     }
+    //     if (joy_X > 0 &&  position_y < 0.25){
+    //       position_y +=  joy_X * 0.0005;
+    //     }
+    //     redraw()
+
+    //     prevX1 = joy_X;
+    //     prevY1 = joy_Y;
+    //   }
+    // }, 100);
     
     var joy2Param = { "title": "joystick2", "autoReturnToCenter": false };
     var joy2 = new JoyStick('joyDiv2',joy2Param);
     setInterval(function(){ 
+      var joy2_X = joy2.GetX(); 
+      var joy2_Y = joy2.GetY();
       if(inverted == false){
-        var joy2_X = joy2.GetX(); 
-        var joy2_Y = joy2.GetY();
         if(joy2_X != prevX2 || joy2_Y != prevY2) {
           console.log("Joy2 = X " + joy2_X + " | Y " + joy2_Y)
         }
@@ -171,8 +218,6 @@ document.addEventListener('DOMContentLoaded', function() {
       }
 
       if(inverted == true){
-        var joy2_X = joy2.GetX(); 
-        var joy2_Y = joy2.GetY();
         if(joy2_X != prevX2 || joy2_Y != prevY2) {
           console.log("Joy2 = X " + joy2_X + " | Y " + joy2_Y)
         }
