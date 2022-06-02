@@ -130,16 +130,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         redraw()
 
-        var joy2_X = joy2.GetX(); 
-        var joy2_Y = joy2.GetY();
-        if(joy2_X != prevX2 || joy2_Y != prevY2) {
-          console.log("Joy2 = X " + joy2_X + " | Y " + joy2_Y)
-        }
-
         prevX1 = joy_X;
         prevY1 = joy_Y;
-        prevX2 = joy2_X;
-        prevY2 = joy2_Y;
       }
 
       if(inverted == true){
@@ -162,19 +154,33 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         redraw()
 
+        prevX1 = joy_X;
+        prevY1 = joy_Y;
+      }
+    }, 100);
+
+    setInterval(function(){ 
+      if(inverted == false){
         var joy2_X = joy2.GetX(); 
         var joy2_Y = joy2.GetY();
         if(joy2_X != prevX2 || joy2_Y != prevY2) {
           console.log("Joy2 = X " + joy2_X + " | Y " + joy2_Y)
         }
+        prevX2 = joy2_X;
+        prevY2 = joy2_Y;
+      }
 
-        prevX1 = joy_X;
-        prevY1 = joy_Y;
+      if(inverted == true){
+        var joy2_X = joy2.GetX(); 
+        var joy2_Y = joy2.GetY();
+        if(joy2_X != prevX2 || joy2_Y != prevY2) {
+          console.log("Joy2 = X " + joy2_X + " | Y " + joy2_Y)
+        }
         prevX2 = joy2_X;
         prevY2 = joy2_Y;
       }
     }, 100);
- 
+
     var btn_wink_left = document.querySelector(".js-wink-left")
     var btn_wink_both = document.querySelector(".js-wink-both")
     var btn_wink_right = document.querySelector(".js-wink-right")
