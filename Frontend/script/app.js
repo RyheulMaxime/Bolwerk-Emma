@@ -95,71 +95,22 @@ async function wink(button){ //must be async func
   button.classList.remove("active")
 }
 
+// const init = function(){
+  
+// }
+
 document.addEventListener('DOMContentLoaded', function() {
-    // document.documentElement.webkitRequestFullScreen();
-    // var joyParam = { "title": "joystick"};
-    // var joy = new JoyStick('joyDiv',joyParam);
+    var joyParam = { "title": "joystick"};
+    var joy = new JoyStick('joyDiv',joyParam);
   
     var prevX1 = -1;
     var prevY1 = -1;
     var prevX2 = -1;
     var prevY2 = -1;
 
-    var Joy1 = new JoyStick('joyDiv', {}, function(stickData) {
-      // joy1IinputPosX.value = stickData.xPosition;
-      // joy1InputPosY.value = stickData.yPosition;
-      // joy1Direzione.value = stickData.cardinalDirection;
-      // joy1X.value = stickData.x;
-      // joy1Y.value = stickData.y;
-      var joy_X = stickData.x; 
-      var joy_Y = stickData.y;
-      if(inverted == false){
-        if(joy_X != prevX1 || joy_Y != prevY1) {
-          console.log("Joy1 = X " + joy_X + " | Y " + joy_Y)
-        }
-        if (joy_Y < 0 && position_x > -0.25){
-          position_x += joy_Y * 0.0005;
-        }
-        if (joy_Y > 0 && position_x < 0.35){
-          position_x += joy_Y * 0.0005;
-        }
-        if (joy_X < 0 && position_y > -0.25){
-          position_y += joy_X * 0.0005;
-        }
-        if (joy_X > 0 && position_y < 0.25){
-          position_y += joy_X * 0.0005;
-        }
-        redraw()
-
-        prevX1 = joy_X;
-        prevY1 = joy_Y;
-      }
-      if(inverted == true){
-        if(joy_X != prevX1 || joy_Y != prevY1) {
-          console.log("Joy1 = X " + joy_X + " | Y " + joy_Y)
-        }
-        if (joy_Y < 0 && - position_x > -0.25){
-          position_x += - joy_Y * 0.0005;
-        }
-        if (joy_Y > 0 && - position_x < 0.35){
-          position_x += - joy_Y * 0.0005;
-        }
-        if (joy_X < 0 &&  position_y > -0.25){
-          position_y +=  joy_X * 0.0005;
-        }
-        if (joy_X > 0 &&  position_y < 0.25){
-          position_y +=  joy_X * 0.0005;
-        }
-        redraw()
-
-        prevX1 = joy_X;
-        prevY1 = joy_Y;
-      }
-    });
-    
-    // setInterval(function(){ 
-    //   var joy_X = joy.GetX(); 
-    //   var joy_Y = joy.GetY();
+    // var Joy1 = new JoyStick('joyDiv', {}, function(stickData) {
+    //   var joy_X = stickData.x; 
+    //   var joy_Y = stickData.y;
     //   if(inverted == false){
     //     if(joy_X != prevX1 || joy_Y != prevY1) {
     //       console.log("Joy1 = X " + joy_X + " | Y " + joy_Y)
@@ -202,7 +153,54 @@ document.addEventListener('DOMContentLoaded', function() {
     //     prevX1 = joy_X;
     //     prevY1 = joy_Y;
     //   }
-    // }, 100);
+    // });
+    
+    setInterval(function(){ 
+      var joy_X = joy.GetX(); 
+      var joy_Y = joy.GetY();
+      if(inverted == false){
+        if(joy_X != prevX1 || joy_Y != prevY1) {
+          console.log("Joy1 = X " + joy_X + " | Y " + joy_Y)
+        }
+        if (joy_Y < 0 && position_x > -0.25){
+          position_x += joy_Y * 0.0005;
+        }
+        if (joy_Y > 0 && position_x < 0.35){
+          position_x += joy_Y * 0.0005;
+        }
+        if (joy_X < 0 && position_y > -0.25){
+          position_y += joy_X * 0.0005;
+        }
+        if (joy_X > 0 && position_y < 0.25){
+          position_y += joy_X * 0.0005;
+        }
+        redraw()
+
+        prevX1 = joy_X;
+        prevY1 = joy_Y;
+      }
+      if(inverted == true){
+        if(joy_X != prevX1 || joy_Y != prevY1) {
+          console.log("Joy1 = X " + joy_X + " | Y " + joy_Y)
+        }
+        if (joy_Y < 0 && - position_x > -0.25){
+          position_x += - joy_Y * 0.0005;
+        }
+        if (joy_Y > 0 && - position_x < 0.35){
+          position_x += - joy_Y * 0.0005;
+        }
+        if (joy_X < 0 &&  position_y > -0.25){
+          position_y +=  joy_X * 0.0005;
+        }
+        if (joy_X > 0 &&  position_y < 0.25){
+          position_y +=  joy_X * 0.0005;
+        }
+        redraw()
+
+        prevX1 = joy_X;
+        prevY1 = joy_Y;
+      }
+    }, 100);
     
     var joy2Param = { "title": "joystick2", "autoReturnToCenter": false };
     var joy2 = new JoyStick('joyDiv2',joy2Param);
@@ -242,8 +240,6 @@ document.addEventListener('DOMContentLoaded', function() {
     btn_wink_right.addEventListener("click", function() {
       wink(btn_wink_right)
     }); 
-
-
 
     var radio_voor = document.querySelector(".js-voor_aanzicht")
     var radio_achter = document.querySelector(".js-achter_aanzicht")
