@@ -95,12 +95,18 @@ async function wink(button){ //must be async func
   button.classList.remove("active")
 }
 
-var joyParam = { "title": "joystick1" };
-var joy2Param = { "title": "joystick2", "autoReturnToCenter": false };
-var joy = new JoyStick('joyDiv',joyParam);
-var joy2 = new JoyStick('joyDiv2',joy2Param);
 
-var prevX1 = -1;
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    // document.documentElement.webkitRequestFullScreen();
+    var joyParam = { "title": "joystick1" };
+    var joy2Param = { "title": "joystick2", "autoReturnToCenter": false };
+    var joy = new JoyStick('joyDiv',joyParam);
+    var joy2 = new JoyStick('joyDiv2',joy2Param);
+
+    var prevX1 = -1;
     var prevY1 = -1;
 
     setInterval(function(){ 
@@ -110,7 +116,7 @@ var prevX1 = -1;
         if(joy_X != prevX1 || joy_Y != prevY1) {
           console.log("Joy1 = X " + joy_X + " | Y " + joy_Y)
         }
-
+    
         if (joy_Y < 0 && position_x > -0.25){
           position_x += joy_Y * 0.0005;
         }
@@ -125,16 +131,16 @@ var prevX1 = -1;
           position_y += joy_X * 0.0005;
         }
         redraw();
-
+    
         prevX1 = joy_X;
         prevY1 = joy_Y;
       }
-
+    
       if(inverted == true){
         if(joy_X != prevX1 || joy_Y != prevY1) {
           console.log("Joy1 = X " + joy_X + " | Y " + joy_Y)
         }
- 
+    
         if (joy_Y < 0 && - position_x > -0.25){
           position_x += - joy_Y * 0.0005;
         }
@@ -149,12 +155,12 @@ var prevX1 = -1;
           position_y +=  joy_X * 0.0005;
         }
         redraw();
-
+    
         prevX1 = joy_X;
         prevY1 = joy_Y;
       }
     }, 100);
-
+    
     setInterval(function(){ 
       var joy2_X = joy2.GetX(); 
       var joy2_Y = joy2.GetY();
@@ -163,7 +169,7 @@ var prevX1 = -1;
           console.log("Joy2 = X " + joy2_X + " | Y " + joy2_Y)
         }
       }
-
+    
       if(inverted == true){
         if(joy2_X != prevX2 || joy2_Y != prevY2) {
           console.log("Joy2 = X " + joy2_X + " | Y " + joy2_Y)
@@ -171,9 +177,6 @@ var prevX1 = -1;
       }
     }, 100);
 
-document.addEventListener('DOMContentLoaded', function() {
-    // document.documentElement.webkitRequestFullScreen();
- 
     var btn_wink_left = document.querySelector(".js-wink-left")
     var btn_wink_both = document.querySelector(".js-wink-both")
     var btn_wink_right = document.querySelector(".js-wink-right")
