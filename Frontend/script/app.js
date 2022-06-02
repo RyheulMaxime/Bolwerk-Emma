@@ -100,11 +100,7 @@ var joy2Param = { "title": "joystick2", "autoReturnToCenter": false };
 var joy = new JoyStick('joyDiv',joyParam);
 var joy2 = new JoyStick('joyDiv2',joy2Param);
 
-document.addEventListener('DOMContentLoaded', function() {
-    // document.documentElement.webkitRequestFullScreen();
-    
- 
-    var prevX1 = -1;
+var prevX1 = -1;
     var prevY1 = -1;
 
     setInterval(function(){ 
@@ -174,6 +170,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
       }
     }, 100);
+
+document.addEventListener('DOMContentLoaded', function() {
+    // document.documentElement.webkitRequestFullScreen();
  
     var btn_wink_left = document.querySelector(".js-wink-left")
     var btn_wink_both = document.querySelector(".js-wink-both")
