@@ -128,18 +128,10 @@ document.addEventListener('DOMContentLoaded', function() {
         if (joy_X > 0 && position_y < 0.25){
           position_y += joy_X * 0.0005;
         }
-        redraw()
-
-        var joy2_X = joy2.GetX(); 
-        var joy2_Y = joy2.GetY();
-        if(joy2_X != prevX2 || joy2_Y != prevY2) {
-          console.log("Joy2 = X " + joy2_X + " | Y " + joy2_Y)
-        }
+        redraw();
 
         prevX1 = joy_X;
         prevY1 = joy_Y;
-        prevX2 = joy2_X;
-        prevY2 = joy2_Y;
       }
 
       if(inverted == true){
@@ -160,16 +152,30 @@ document.addEventListener('DOMContentLoaded', function() {
         if (joy_X > 0 &&  position_y < 0.25){
           position_y +=  joy_X * 0.0005;
         }
-        redraw()
+        redraw();
 
-        var joy2_X = joy2.GetX(); 
-        var joy2_Y = joy2.GetY();
+        prevX1 = joy_X;
+        prevY1 = joy_Y;
+      }
+    }, 100);
+
+    setInterval(function(){ 
+      var joy2_X = joy2.GetX(); 
+      var joy2_Y = joy2.GetY();
+      if(inverted == false){
         if(joy2_X != prevX2 || joy2_Y != prevY2) {
           console.log("Joy2 = X " + joy2_X + " | Y " + joy2_Y)
         }
 
-        prevX1 = joy_X;
-        prevY1 = joy_Y;
+        prevX2 = joy2_X;
+        prevY2 = joy2_Y;
+      }
+
+      if(inverted == true){
+        if(joy2_X != prevX2 || joy2_Y != prevY2) {
+          console.log("Joy2 = X " + joy2_X + " | Y " + joy2_Y)
+        }
+
         prevX2 = joy2_X;
         prevY2 = joy2_Y;
       }
