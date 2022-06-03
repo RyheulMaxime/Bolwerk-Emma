@@ -4,6 +4,7 @@ let head;
 
 var position_x = 0
 var position_y = 0
+var sleep_mode = false;
 
 function preload() {
     // head = loadModel('img/thanos.obj');    
@@ -90,7 +91,7 @@ async function wink(button){ //must be async func
   console.log("wink: " + button)
   button.disabled = true;
   button.classList.add("active")
-  await sleep(4000) //wait 5 seconds
+  await sleep(1000) //wait 5 seconds
   button.disabled = false;
   button.classList.remove("active")
 }
@@ -108,98 +109,58 @@ document.addEventListener('DOMContentLoaded', function() {
     var prevX2 = -1;
     var prevY2 = -1;
 
-    // var Joy1 = new JoyStick('joyDiv', {}, function(stickData) {
-    //   var joy_X = stickData.x; 
-    //   var joy_Y = stickData.y;
-    //   if(inverted == false){
-    //     if(joy_X != prevX1 || joy_Y != prevY1) {
-    //       console.log("Joy1 = X " + joy_X + " | Y " + joy_Y)
-    //     }
-    //     if (joy_Y < 0 && position_x > -0.25){
-    //       position_x += joy_Y * 0.0005;
-    //     }
-    //     if (joy_Y > 0 && position_x < 0.35){
-    //       position_x += joy_Y * 0.0005;
-    //     }
-    //     if (joy_X < 0 && position_y > -0.25){
-    //       position_y += joy_X * 0.0005;
-    //     }
-    //     if (joy_X > 0 && position_y < 0.25){
-    //       position_y += joy_X * 0.0005;
-    //     }
-    //     redraw()
-
-    //     prevX1 = joy_X;
-    //     prevY1 = joy_Y;
-    //   }
-    //   if(inverted == true){
-    //     if(joy_X != prevX1 || joy_Y != prevY1) {
-    //       console.log("Joy1 = X " + joy_X + " | Y " + joy_Y)
-    //     }
-    //     if (joy_Y < 0 && - position_x > -0.25){
-    //       position_x += - joy_Y * 0.0005;
-    //     }
-    //     if (joy_Y > 0 && - position_x < 0.35){
-    //       position_x += - joy_Y * 0.0005;
-    //     }
-    //     if (joy_X < 0 &&  position_y > -0.25){
-    //       position_y +=  joy_X * 0.0005;
-    //     }
-    //     if (joy_X > 0 &&  position_y < 0.25){
-    //       position_y +=  joy_X * 0.0005;
-    //     }
-    //     redraw()
-
-    //     prevX1 = joy_X;
-    //     prevY1 = joy_Y;
-    //   }
-    // });
+    var speed = 0.0005;
     
     setInterval(function(){ 
       var joy_X = joy.GetX(); 
       var joy_Y = joy.GetY();
       if(inverted == false){
-        if(joy_X != prevX1 || joy_Y != prevY1) {
-          console.log("Joy1 = X " + joy_X + " | Y " + joy_Y)
-        };
-        if (joy_Y < 0 && position_x > -0.25){
-          position_x += joy_Y * 0.0005;
-        };
-        if (joy_Y > 0 && position_x < 0.35){
-          position_x += joy_Y * 0.0005;
-        };
-        if (joy_X < 0 && position_y > -0.25){
-          position_y += joy_X * 0.0005;
-        };
-        if (joy_X > 0 && position_y < 0.25){
-          position_y += joy_X * 0.0005;
-        };
-        redraw();
+        if(sleep_mode == false){
+          if(joy_X != prevX1 || joy_Y != prevY1) {
+            console.log("Joy1 = X " + joy_X + " | Y " + joy_Y)
+          };
+          if (joy_Y < 0 && position_x > -0.25){
+            position_x += joy_Y * speed;
+          };
+          if (joy_Y > 0 && position_x < 0.35){
+            position_x += joy_Y * speed;
+          };
+          if (joy_X < 0 && position_y > -0.25){
+            position_y += joy_X * speed;
+          };
+          if (joy_X > 0 && position_y < 0.25){
+            position_y += joy_X * speed;
+          };
+          redraw();
 
-        prevX1 = joy_X;
-        prevY1 = joy_Y;
+          prevX1 = joy_X;
+          prevY1 = joy_Y;
+        };
       }
       if(inverted == true){
-        if(joy_X != prevX1 || joy_Y != prevY1) {
-          console.log("Joy1 = X " + joy_X + " | Y " + joy_Y)
+        if(sleep_mode == false){
+          if(joy_X != prevX1 || joy_Y != prevY1) {
+            console.log("Joy1 = X " + joy_X + " | Y " + joy_Y)
+          };
+          if (joy_Y < 0 && - position_x > -0.25){
+            position_x += - joy_Y * speed;
+          };
+          if (joy_Y > 0 && - position_x < 0.35){
+            position_x += - joy_Y * speed;
+          };
+          if (joy_X < 0 &&  position_y > -0.25){
+            position_y +=  joy_X * speed;
+          };
+          if (joy_X > 0 &&  position_y < 0.25){
+            position_y +=  joy_X * speed;
+          };
+          if(sleep_mode == false){
+          redraw();
+          };
+          prevX1 = joy_X;
+          prevY1 = joy_Y;
         };
-        if (joy_Y < 0 && - position_x > -0.25){
-          position_x += - joy_Y * 0.0005;
-        };
-        if (joy_Y > 0 && - position_x < 0.35){
-          position_x += - joy_Y * 0.0005;
-        };
-        if (joy_X < 0 &&  position_y > -0.25){
-          position_y +=  joy_X * 0.0005;
-        };
-        if (joy_X > 0 &&  position_y < 0.25){
-          position_y +=  joy_X * 0.0005;
-        };
-        redraw();
-
-        prevX1 = joy_X;
-        prevY1 = joy_Y;
-      }
+      };
     }, 100);
     
     var joy2Param = { "title": "joystick2", "autoReturnToCenter": false };
@@ -273,8 +234,46 @@ document.addEventListener('DOMContentLoaded', function() {
       body_page.classList.remove("settings-active")
       checkbox_settings.checked = false;
     });
+    
+    var btn_center = document.querySelector(".js-center-head")
+    btn_center.addEventListener('click', function() {
+      console.log("center")
+      position_x = 0;
+      position_y = 0;
+      redraw();
+    });
+    
+    var slider_head = document.querySelector(".js-slider-head")
+    slider_head.addEventListener('change', function() {
+      // console.log(slider_head.value)
+      speed = slider_head.value / 100000;
+      console.log(speed);
+    });
 
+    var checkbox_sleep = document.querySelector(".js-slaapstand")
+    checkbox_sleep.addEventListener('change', function() {
+      if(this.checked) {
+        // console.log("sleep");
+        sleep_mode = true;
+        if(inverted == false){
+          position_x = -0.35;
+          position_y = 0;
+        }else{
+          position_x = 0.35;
+          position_y = 0;
+        }
+        
+        redraw();
+      } else {
+        // console.log("wake");
+        sleep_mode = false;
+        position_x = 0;
+        position_y = 0;
+        redraw();
+      }
+    });
 
+    
     
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('./serviceWorker.js')
