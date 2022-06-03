@@ -569,14 +569,20 @@ async def preset_function(status):
         return {"Status": "Invalid sleepstatus"}
 
 
-@app.get("/movement/{Xhead}/{Yhead}/{Xeyes}/{Yeyes}")
-async def read_sensors(Xhead, Yhead, Xeyes, Yeyes):
+@app.get("/movement/head/{Xhead}/{Yhead}")
+async def read_sensors(Xhead, Yhead):
     global headX
     global headY
-    global eyesX
-    global eyesY
     headX = float(Xhead)
     headY = float(Yhead)
+
+    # printPositions()
+    return {"Status": "ok", "Action": "Moving head and eyes"}
+
+@app.get("/movement/eyes/{Xeyes}/{Yeyes}")
+async def read_sensors(Xeyes, Yeyes):
+    global eyesX
+    global eyesY
     eyesX = float(Xeyes)
     eyesY = float(Yeyes)
 
