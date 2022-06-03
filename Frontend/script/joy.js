@@ -81,7 +81,11 @@
      var circumference = 2 * Math.PI;
      var internalRadius = (canvas.width-((canvas.width/2)+10))/2;
      var maxMoveStick = internalRadius + 5;
-     var externalRadius = internalRadius + 30;
+     if(width < 250){
+        var externalRadius = internalRadius + 30;
+     }else{
+        var externalRadius = internalRadius + 50;
+     }
      var centerX = canvas.width / 2;
      var centerY = canvas.height / 2;
      var directionHorizontalLimitPos = canvas.width / 10;
