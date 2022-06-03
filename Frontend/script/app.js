@@ -83,6 +83,8 @@ function draw() {
   
 }
 
+var speed_wink = 1000;
+
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -91,7 +93,7 @@ async function wink(button){ //must be async func
   console.log("wink: " + button)
   button.disabled = true;
   button.classList.add("active")
-  await sleep(1000) //wait 5 seconds
+  await sleep(speed_wink) //wait x seconds
   button.disabled = false;
   button.classList.remove("active")
 }
@@ -221,7 +223,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var checkbox_settings = document.querySelector(".js-checkbox-settings")
     var body_page = document.querySelector(".js-body")
     checkbox_settings.addEventListener('change', function() {
-      console.log("settings")
+      // console.log("settings")
       if(this.checked) {
         body_page.classList.add("settings-active")
       } else {
@@ -238,6 +240,8 @@ document.addEventListener('DOMContentLoaded', function() {
     var btn_center = document.querySelector(".js-center-head")
     btn_center.addEventListener('click', function() {
       console.log("center")
+      var reset = joy2.reset()
+      console.log(reset)
       position_x = 0;
       position_y = 0;
       redraw();
@@ -248,6 +252,12 @@ document.addEventListener('DOMContentLoaded', function() {
       // console.log(slider_head.value)
       speed = slider_head.value / 100000;
       console.log(speed);
+    });
+    
+    var input_speed_wink = document.querySelector(".js-snelheid-knipogen")
+    input_speed_wink.addEventListener('change', function() {
+      // console.log(this.value)
+      speed_wink = this.value * 1000;
     });
 
     var checkbox_sleep = document.querySelector(".js-slaapstand")

@@ -313,6 +313,18 @@
          return ((100*((movedY - centerY)/maxMoveStick))*-1).toFixed();
      };
      
+     this.reset = function ()
+     {
+            // Delete canvas
+            movedX=centerX;
+            movedY=centerY;
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            drawExternal();
+            drawInternal();
+
+            return "reset";
+     }
+
      /**
       * @desc Get the direction of the cursor as a string that indicates the cardinal points where this is oriented
       * @return String of cardinal point N, NE, E, SE, S, SW, W, NW and C when it is placed in the center

@@ -39,7 +39,8 @@
     --global-color-neutral-xxxx-dark: #20223a; */
 
     /* fonts */
-    --global-fontSize-md:24px;
+    /* --global-fontSize-md:24px; */
+    --global-fontSize-md:1rem;
 
     /* Shadows */
     /* --global-input-focus-boxShadowColor: var(--global-color-alpha-x-transparent); */
@@ -75,6 +76,7 @@
     --global-baseline: calc(1rem / 2);
 
     --global-whitespace-sm: var(--global-baseline);
+    --global-whitespace-sm: calc(var(--global-baseline)*1.5);
     --global-whitespace-md: calc(var(--global-baseline) * 2);
     --global-whitespace-base: calc(var(--global-baseline) * 3);
     --global-whitespace-lg: calc(var(--global-baseline) * 4);
@@ -551,10 +553,6 @@ input[type=range] {
     grid-column: 4;
 }
 
-.c-controls--button_position{
-    /* grid-row: 2;
-    grid-column: 1 /span 3; */
-}
 
 .c-joystick {
     width:200px;
@@ -734,6 +732,26 @@ input[type=range] {
     pointer-events: auto;
 }
 
+.c-settings--knipogen{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.c-settings--knipogen--label{
+    display: block;
+}
+
+.c-settings--knipogen--end{
+    display: flex;
+}
+
+.c-settings--knipogen--input{
+    display: block;
+    width: 48px;
+    margin-right: var(--global-whitespace-sm);
+}
+
 /*
     Component: settings symbol
     ---
@@ -830,7 +848,7 @@ input[type="radio"]:checked + .c-settings--orientation--right{
     --label-color: var(--global-text-color);
     margin-bottom: 0;
     padding-bottom: var(--global-whitespace-sm);
-    font-size: 20px;
+    font-size: var(--global-fontSize-md);
     line-height: 32px;
     color: var(--label-color);
 }
