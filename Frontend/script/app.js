@@ -1,4 +1,8 @@
 'use strict';
+// const lanIP = `${window.location.hostname}:8000`;
+// const lanIP = `127.0.0.1:8000`;
+const lanIP = `192.168.69.10:8000`;
+const socket = `http://${lanIP}`;
 
 //#region *** Head Visualisation                        ***********
 let head;
@@ -72,25 +76,44 @@ function draw() {
 //#endregion
 
 //#region ***  DOM references                           ***********
-var speed_wink = 1000;
+var speed_wink = 800; // time wink in ms
 //#endregion
 
 //#region ***  Callback-Visualisation - show___         ***********
+function CallbackOpenFullscreen() {
+  if (document.documentElement.requestFullscreen) {
+    document.documentElement.requestFullscreen();
+  } else if (document.documentElement.webkitRequestFullscreen) { /* Safari */
+    document.documentElement.webkitRequestFullscreen();
+  } else if (document.documentElement.msRequestFullscreen) { /* IE11 */
+    document.documentElement.msRequestFullscreen();
+  }
+
+}
+function CallbackCloseFullscreen() {
+  if (document.exitFullscreen) {
+    document.exitFullscreen();
+  } else if (document.webkitExitFullscreen) { /* Safari */
+    document.webkitExitFullscreen();
+  } else if (document.msExitFullscreen) { /* IE11 */
+    document.msExitFullscreen();
+  }
+  
+}
 //#endregion
 
 //#region ***  Callback-No Visualisation - callback___  ***********
-function callbackSleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
 
 async function wink(button){ //must be async func
   console.log("wink: " + button)
   button.disabled = true;
   button.classList.add("active")
-  await callBackSleep(speed_wink) //wait x seconds
+  // await callbackSleep(speed_wink) //wait x seconds
+  await new Promise(resolve => setTimeout(resolve, speed_wink));
   button.disabled = false;
   button.classList.remove("active")
 }
+
 //#endregion
 
 //#region ***  Data Access - get___                     ***********
@@ -110,7 +133,7 @@ const getInput = function() {
     if(inverted == false){
       if(sleep_mode == false){
         if(joy_X != prevX1 || joy_Y != prevY1) {
-          fetch(`http://127.0.0.1:8000/movement/head/${joy_X}/${joy_Y}`)
+          fetch(`${socket}/movement/head/${joy_X}/${joy_Y}`)
           .then(response => {
             return response.json();
           });
@@ -136,7 +159,7 @@ const getInput = function() {
     if(inverted == true){
       if(sleep_mode == false){
         if(joy_X != prevX1 || joy_Y != prevY1) {
-          fetch(`http://127.0.0.1:8000/movement/head/${joy_X * -1}/${joy_Y}`)
+          fetch(`${socket}/movement/head/${joy_X * -1}/${joy_Y}`)
           .then(response => {
             return response.json();
           });
@@ -169,7 +192,7 @@ const getInput = function() {
     var joy2_Y = joy2.GetY();
     if(inverted == false){
       if(joy2_X != prevX2 || joy2_Y != prevY2) {
-        fetch(`http://127.0.0.1:8000/movement/eyes/${joy2_X}/${joy2_Y}`)
+        fetch(`${socket}/movement/eyes/${joy2_X}/${joy2_Y}`)
           .then(response => {
             return response.json();
           });
@@ -180,7 +203,7 @@ const getInput = function() {
 
     if(inverted == true){
       if(joy2_X != prevX2 || joy2_Y != prevY2) {
-        fetch(`http://127.0.0.1:8000/movement/eyes/${joy2_X* -1}/${joy2_Y}`)
+        fetch(`${socket}/movement/eyes/${joy2_X* -1}/${joy2_Y}`)
           .then(response => {
             return response.json();
           });
@@ -195,7 +218,7 @@ const getInput = function() {
   var btn_wink_right = document.querySelector(".js-wink-right")
 
   btn_wink_left.addEventListener("click", function() {
-    fetch(`http://127.0.0.1:8000/function/wink_left`)
+    fetch(`${socket}/function/wink_left`)
           .then(response => {
             return response.json();
           });
@@ -204,7 +227,7 @@ const getInput = function() {
   }); 
   
   btn_wink_both.addEventListener("click", function() {
-    fetch(`http://127.0.0.1:8000/function/wink_both`)
+    fetch(`${socket}/function/wink_both`)
           .then(response => {
             return response.json();
           });
@@ -212,7 +235,7 @@ const getInput = function() {
   }); 
   
   btn_wink_right.addEventListener("click", function() {
-    fetch(`http://127.0.0.1:8000/function/wink_right`)
+    fetch(`${socket}/function/wink_right`)
           .then(response => {
             return response.json();
           });
@@ -255,7 +278,7 @@ const getInput = function() {
   var btn_center = document.querySelector(".js-center-head")
   btn_center.addEventListener('click', function() {
     console.log("center")
-    fetch(`http://127.0.0.1:8000/function/head_center`)
+    fetch(`${socket}/function/head_center`)
       .then(response => {
         return response.json();
       });
@@ -284,7 +307,7 @@ const getInput = function() {
     if(this.checked) {
       // console.log("sleep");
       sleep_mode = true;
-      fetch(`http://127.0.0.1:8000/sleep/1`)
+      fetch(`${socket}/sleep/1`)
           .then(response => {
             return response.json();
           });
@@ -298,7 +321,7 @@ const getInput = function() {
       
       redraw();
     } else {
-      fetch(`http://127.0.0.1:8000/sleep/0`)
+      fetch(`${socket}/sleep/0`)
           .then(response => {
             return response.json();
           });
@@ -309,6 +332,22 @@ const getInput = function() {
       redraw();
     }
   });
+
+  var btn_full_screen = document.querySelector(".js-fullscreen")
+  btn_full_screen.addEventListener('click', function() {
+    if(document.fullscreenElement == null){
+      CallbackOpenFullscreen();
+      btn_full_screen.innerText = "Close Fullscreen";
+      screen.orientation.lock('landscape');
+
+    }else{
+      CallbackCloseFullscreen();
+      btn_full_screen.innerText = "Fullscreen";
+      screen.orientation.unlock()
+
+    }
+  });
+
 }
 
 //#endregion

@@ -1,7 +1,9 @@
+from concurrent.futures import thread
 from operator import truediv
 from turtle import right
 from anyio import sleep_forever
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 import threading
 import RPi.GPIO as GPIO          
 from time import sleep, time
@@ -122,7 +124,6 @@ def read_motor_callback_x(pin):
             PositionCounterX += 1
     
     prevStatusX = CurrentX
-
     # print(f"headX {PositionCounterX}")
 
 def read_motor_callback_y(pin):
@@ -194,6 +195,20 @@ GPIO.add_event_detect(encoderYPin, GPIO.FALLING, read_motor_callback_y, bounceti
 
 app = FastAPI()
 
+origins = [
+    "http://192.168.69.10:8080",
+    "http://192.168.69.10:8080/*",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
 def testInput():
     try:
         def printPositions():
@@ -216,6 +231,10 @@ def testInput():
 def start():
     global PositionMaxX
     global center_head
+    global setMinX
+    global setMaxX
+    global setMinY
+    global setMaxY
 
     while setMinX == False:
         GPIO.output(in1,GPIO.HIGH)
@@ -223,7 +242,7 @@ def start():
         PWM_motor_1.ChangeDutyCycle(20)
 
     GPIO.output(in1,GPIO.LOW)
-    GPIO.output(in2,GPIO.LOW)
+    GPIO.output(in2,GPIO.LOW) 
 
     while setMaxX == False:
         GPIO.output(in1,GPIO.LOW)
@@ -290,50 +309,56 @@ def controlMovementHead():
                         headY = 0
                         center_head = 0
 
-
-
                 else:
                     if headX != 0:
-                        if headX < 0 and PositionCounterX > PositionMinX:
+                        if headX < -20 and PositionCounterX > PositionMinX:
                             GPIO.output(in1,GPIO.LOW)
                             GPIO.output(in2,GPIO.HIGH)
                             if headX < -100:
                                 headX = -100
+                            PWM_motor_1.ChangeDutyCycle(100)
+                            # sleep(0.01)
                             PWM_motor_1.ChangeDutyCycle(round((headX * -1) / 5))
 
-                        elif headX > 0 and PositionCounterX < PositionMaxX:
+                        elif headX > 20 and PositionCounterX < PositionMaxX:
                             GPIO.output(in1,GPIO.HIGH)
                             GPIO.output(in2,GPIO.LOW)
                             if headX > 100:
                                 headX = 100
+                            PWM_motor_1.ChangeDutyCycle(100)
+                            # sleep(0.01)
                             PWM_motor_1.ChangeDutyCycle(round(headX / 5))
                         else:
                             GPIO.output(in1,GPIO.LOW)
                             GPIO.output(in2,GPIO.LOW)
 
-                    elif headX == 0:
+                    elif headX <= 20 and headX >= -20:
                         GPIO.output(in1,GPIO.LOW)
                         GPIO.output(in2,GPIO.LOW)
 
 
                     if headY != 0:
-                        if headY < 0 and PositionCounterY > PositionMinY:
+                        if headY < -20 and PositionCounterY > PositionMinY:
                             GPIO.output(in3,GPIO.LOW)
                             GPIO.output(in4,GPIO.HIGH)
                             if headY < -100:
                                 headY = -100
+                            PWM_motor_2.ChangeDutyCycle(100)
+                            # sleep(0.01)
                             PWM_motor_2.ChangeDutyCycle(round((headY * -1) / 5))
-                        elif headY > 0 and PositionCounterY < PositionMaxY:
+                        elif headY > 20 and PositionCounterY < PositionMaxY:
                             GPIO.output(in3,GPIO.HIGH)
                             GPIO.output(in4,GPIO.LOW)
                             if headY > 100:
                                 headY = 100
+                            PWM_motor_2.ChangeDutyCycle(100)
+                            # sleep(0.01)
                             PWM_motor_2.ChangeDutyCycle(round(headY / 5))
                         else:
                             GPIO.output(in3,GPIO.LOW)
                             GPIO.output(in4,GPIO.LOW)
 
-                    elif headY == 0:
+                    elif headY <= 20 and headY >= -20:
                         GPIO.output(in3,GPIO.LOW)
                         GPIO.output(in4,GPIO.LOW)
 
@@ -366,9 +391,7 @@ def controlMovementHead():
                     headY = 0
                     center_head = 0
 
-
-            sleep(0.01)
-
+            sleep(0.09)
 
     except IOError as e:
         pass
@@ -464,15 +487,15 @@ def controlMovementEyeLid():
             sleep(0.01)
 
             if emma_sleep == 1:
-                Servo_PWM_3.ChangeDutyCycle(9)
+                Servo_PWM_3.ChangeDutyCycle(2)
                 Servo_PWM_4.ChangeDutyCycle(9)
 
             else:  
                 # print(f"{wink_left_status} {wink_right_status} {wink_both_status}")
                 if wink_left_status == 1:
-                    Servo_PWM_3.ChangeDutyCycle(9)
-                    sleep(0.8)
                     Servo_PWM_3.ChangeDutyCycle(2)
+                    sleep(0.8)
+                    Servo_PWM_3.ChangeDutyCycle(8)
 
                 elif wink_right_status == 1:
                     Servo_PWM_4.ChangeDutyCycle(9)
@@ -480,10 +503,10 @@ def controlMovementEyeLid():
                     Servo_PWM_4.ChangeDutyCycle(2)
 
                 elif wink_both_status == 1:
-                    Servo_PWM_3.ChangeDutyCycle(9)
+                    Servo_PWM_3.ChangeDutyCycle(2)
                     Servo_PWM_4.ChangeDutyCycle(9)
                     sleep(0.8)
-                    Servo_PWM_3.ChangeDutyCycle(2)
+                    Servo_PWM_3.ChangeDutyCycle(8)
                     Servo_PWM_4.ChangeDutyCycle(2)
 
                 wink_left_status = 0
@@ -508,6 +531,9 @@ thread3 = threading.Timer(3, controlMovementEyeLid)
 thread1.start()
 thread2.start()
 thread3.start()
+
+# thread1.Timer.Change(Timeout.Infinite, Timeout.Infinite);
+
 
 print("**** Program started ****")
 
