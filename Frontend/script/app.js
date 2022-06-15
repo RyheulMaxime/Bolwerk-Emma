@@ -20,6 +20,7 @@ var sketchHeight;
 var size_head
 var movement_down 
 var inverted = false;
+var renderer;
 
 function setup() {
   sketchWidth = document.getElementById("js-head").offsetWidth;
@@ -33,7 +34,7 @@ function setup() {
     size_head = sketchWidth / 30
     movement_down = sketchHeight / 5
   }
-  var renderer = createCanvas(sketchWidth, sketchHeight, WEBGL);
+  renderer = createCanvas(sketchWidth, sketchHeight, WEBGL);
   renderer.parent("js-head");
 }
 
@@ -289,17 +290,16 @@ const getInput = function() {
     redraw();
   });
   
-  var slider_head = document.querySelector(".js-slider-head")
-  slider_head.addEventListener('change', function() {
-    // console.log(slider_head.value)
-    speed = slider_head.value / 100000;
-    console.log(speed);
-  });
-  
   var input_speed_wink = document.querySelector(".js-snelheid-knipogen")
   input_speed_wink.addEventListener('change', function() {
-    // console.log(this.value)
-    speed_wink = this.value * 1000;
+    // console.log("change speed wink")
+    speed_wink = input_speed_wink.value * 1000;
+    var speed_wink_servos= input_speed_wink.value
+    document.querySelector(".js-snelheid-knipogen-visualisatie").innerHTML = speed_wink_servos
+    fetch(`${socket}/eyes/${speed_wink_servos}`)
+      .then(response => {
+        return response.json();
+    });
   });
 
   var checkbox_sleep = document.querySelector(".js-slaapstand")
@@ -333,6 +333,24 @@ const getInput = function() {
     }
   });
 
+  screen.orientation.addEventListener("change", function(e) { 
+    // Do something on change 
+    // setup();
+    sketchWidth = document.getElementById("js-head").offsetWidth;
+    sketchHeight = document.getElementById("js-head").offsetHeight;
+    if(sketchWidth > sketchHeight){
+      size_head = sketchHeight / 30
+      movement_down = sketchHeight / 3.4
+    }
+    
+    if(sketchWidth < sketchHeight){
+      size_head = sketchWidth / 30
+      movement_down = sketchHeight / 5
+    }
+    renderer = resizeCanvas(sketchWidth, sketchHeight, WEBGL);
+    redraw();
+  });
+
   var btn_full_screen = document.querySelector(".js-fullscreen")
   btn_full_screen.addEventListener('click', function() {
     if(document.fullscreenElement == null){
@@ -347,7 +365,6 @@ const getInput = function() {
 
     }
   });
-
 }
 
 //#endregion

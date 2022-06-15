@@ -29,8 +29,8 @@ emma_sleep = 0
 global PositionCounterX
 global PositionCounterY
 
-PositionCounterX = 0
-PositionCounterY = 0
+PositionCounterX = 15
+PositionCounterY = 15
 
 global prevStatusX
 global prevStatusY
@@ -62,6 +62,9 @@ headX = 1
 headY = 1
 eyesX = 1
 eyesY = 1
+
+speed_eyes = float(0.8)
+inverted = False
 #endregion
 
 #region ***  GPIO pin declarations                    ***********
@@ -81,6 +84,8 @@ encoderXPin = 6
 encoderYPin = 5
 MinButtonX = 14
 MaxButtonX = 15
+MinButtonY = 27
+MaxButtonY = 22
 #endregion
 
 #region ***  Callback functions                       ***********
@@ -88,7 +93,7 @@ def min_button_callback_x(pin):
     global PositionCounterX
     global setMinX
 
-    setMinX = 1
+    setMinX = True
     PositionCounterX = 0
     
     print(f"Min value button x {PositionCounterX}")
@@ -98,16 +103,27 @@ def max_button_callback_x(pin):
     global PositionMaxX
     global setMaxX
 
-    setMaxX = 1
+    setMaxX = True
     PositionMaxX = PositionCounterX
     print(f"Max value button x {PositionCounterX}")
 
 def min_button_callback_y(pin):
     global PositionCounterY
+    global setMinY
+
+    setMinY = True
+    PositionCounterY = 0
+
     print(f"Min value button y {PositionCounterY}")
 
 def max_button_callback_y(pin):
     global PositionCounterY
+    global PositionMaxY
+    global setMaxY
+
+    setMaxY = True
+    PositionMaxY = PositionCounterY
+
     print(f"Max value button y {PositionCounterY}")
 
 def read_motor_callback_x(pin):
@@ -129,7 +145,6 @@ def read_motor_callback_x(pin):
 def read_motor_callback_y(pin):
     global PositionCounterY
     global prevStatusY
-
     CurrentY = GPIO.input(encoderYPin)
 
     if CurrentY != prevStatusY:
@@ -153,6 +168,8 @@ GPIO.setup(encoderXPin, GPIO.IN)
 GPIO.setup(encoderYPin, GPIO.IN)
 GPIO.setup(MinButtonX, GPIO.IN, GPIO.PUD_UP)
 GPIO.setup(MaxButtonX, GPIO.IN, GPIO.PUD_UP)
+GPIO.setup(MinButtonY, GPIO.IN, GPIO.PUD_UP)
+GPIO.setup(MaxButtonY, GPIO.IN, GPIO.PUD_UP)
 
 GPIO.setup(in1,GPIO.OUT)
 GPIO.setup(in2,GPIO.OUT)
@@ -182,13 +199,15 @@ Servo_PWM_2 = GPIO.PWM(servoPIN2, 50)
 Servo_PWM_3 = GPIO.PWM(servoPIN3, 50) 
 Servo_PWM_4 = GPIO.PWM(servoPIN4, 50) 
 
-Servo_PWM_1.start(1)
-Servo_PWM_2.start(1)
-Servo_PWM_3.start(1)
-Servo_PWM_4.start(1)
+Servo_PWM_1.start(6)
+Servo_PWM_2.start(7)
+Servo_PWM_3.start(2)
+Servo_PWM_4.start(8)
 
 GPIO.add_event_detect(MinButtonX, GPIO.FALLING, min_button_callback_x, bouncetime=200)
 GPIO.add_event_detect(MaxButtonX, GPIO.FALLING, max_button_callback_x, bouncetime=200)
+GPIO.add_event_detect(MinButtonY, GPIO.FALLING, min_button_callback_y, bouncetime=200)
+GPIO.add_event_detect(MaxButtonY, GPIO.FALLING, max_button_callback_y, bouncetime=200)
 GPIO.add_event_detect(encoderXPin, GPIO.FALLING ,read_motor_callback_x, bouncetime= 100)
 GPIO.add_event_detect(encoderYPin, GPIO.FALLING, read_motor_callback_y, bouncetime= 100)
 #endregion
@@ -207,7 +226,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 
 def testInput():
     try:
@@ -230,6 +248,8 @@ def testInput():
 
 def start():
     global PositionMaxX
+    global PositionMinX
+    global PositionCounterX
     global center_head
     global setMinX
     global setMaxX
@@ -239,7 +259,8 @@ def start():
     while setMinX == False:
         GPIO.output(in1,GPIO.HIGH)
         GPIO.output(in2,GPIO.LOW)
-        PWM_motor_1.ChangeDutyCycle(20)
+        PWM_motor_1.ChangeDutyCycle(100)
+        PWM_motor_1.ChangeDutyCycle(15)
 
     GPIO.output(in1,GPIO.LOW)
     GPIO.output(in2,GPIO.LOW) 
@@ -247,12 +268,36 @@ def start():
     while setMaxX == False:
         GPIO.output(in1,GPIO.LOW)
         GPIO.output(in2,GPIO.HIGH)
-        PWM_motor_1.ChangeDutyCycle(20)
-
-    PositionMaxX = PositionCounterX
+        # PWM_motor_1.ChangeDutyCycle(100)
+        PWM_motor_1.ChangeDutyCycle(15)
+    
     GPIO.output(in1,GPIO.LOW)
     GPIO.output(in2,GPIO.LOW)
-    print(MaxButtonX)
+
+    GPIO.output(in3,GPIO.HIGH)
+    GPIO.output(in4,GPIO.LOW)
+    PWM_motor_2.ChangeDutyCycle(100)
+    while setMinY == False:
+        PWM_motor_2.ChangeDutyCycle(50)
+
+    GPIO.output(in3,GPIO.LOW)
+    GPIO.output(in4,GPIO.LOW)
+
+    GPIO.output(in3,GPIO.LOW)
+    GPIO.output(in4,GPIO.HIGH)
+    PWM_motor_2.ChangeDutyCycle(100)
+    while setMaxY == False:
+        PWM_motor_2.ChangeDutyCycle(50)
+
+    GPIO.output(in3,GPIO.LOW)
+    GPIO.output(in4,GPIO.LOW)
+
+    PositionMaxX = PositionCounterX
+    PositionMaxY = PositionCounterY
+    GPIO.output(in1,GPIO.LOW)
+    GPIO.output(in2,GPIO.LOW)
+    # print(MaxButtonX)
+    # print(MaxButtonY)
 
     center_head = 1
 
@@ -292,15 +337,15 @@ def controlMovementHead():
                         headY = 1
                         GPIO.output(in3,GPIO.HIGH)
                         GPIO.output(in4,GPIO.LOW)
-                        PWM_motor_2.ChangeDutyCycle(20)
+                        PWM_motor_2.ChangeDutyCycle(50)
 
                     elif PositionCounterY > (PositionMaxY / 2):
                         headY = -1
                         GPIO.output(in3,GPIO.LOW)
                         GPIO.output(in4,GPIO.HIGH)
-                        PWM_motor_2.ChangeDutyCycle(20)
+                        PWM_motor_2.ChangeDutyCycle(50)
 
-                    if PositionCounterX == (PositionMaxX / 2) and PositionCounterY == (PositionMaxY / 2):
+                    if PositionCounterX == round((PositionMaxX / 2)) and PositionCounterY == round((PositionMaxY / 2)):
                         GPIO.output(in1,GPIO.LOW)
                         GPIO.output(in2,GPIO.LOW)
                         GPIO.output(in3,GPIO.LOW)
@@ -345,7 +390,7 @@ def controlMovementHead():
                                 headY = -100
                             PWM_motor_2.ChangeDutyCycle(100)
                             # sleep(0.01)
-                            PWM_motor_2.ChangeDutyCycle(round((headY * -1) / 5))
+                            PWM_motor_2.ChangeDutyCycle(round((headY * -1) / 3))
                         elif headY > 20 and PositionCounterY < PositionMaxY:
                             GPIO.output(in3,GPIO.HIGH)
                             GPIO.output(in4,GPIO.LOW)
@@ -353,7 +398,7 @@ def controlMovementHead():
                                 headY = 100
                             PWM_motor_2.ChangeDutyCycle(100)
                             # sleep(0.01)
-                            PWM_motor_2.ChangeDutyCycle(round(headY / 5))
+                            PWM_motor_2.ChangeDutyCycle(round(headY / 3))
                         else:
                             GPIO.output(in3,GPIO.LOW)
                             GPIO.output(in4,GPIO.LOW)
@@ -376,11 +421,11 @@ def controlMovementHead():
                     GPIO.output(in2,GPIO.HIGH)
                     PWM_motor_1.ChangeDutyCycle(20)
 
-                if PositionCounterY < (PositionMinY):
+                if PositionCounterY > (PositionMinY):
                     headY = -1
                     GPIO.output(in3,GPIO.HIGH)
                     GPIO.output(in4,GPIO.LOW)
-                    PWM_motor_2.ChangeDutyCycle(20)
+                    PWM_motor_2.ChangeDutyCycle(50)
 
                 if PositionCounterX == (PositionMaxX / 2) and PositionMinY == 0:
                     GPIO.output(in1,GPIO.LOW)
@@ -392,7 +437,6 @@ def controlMovementHead():
                     center_head = 0
 
             sleep(0.09)
-
     except IOError as e:
         pass
     except KeyboardInterrupt:
@@ -408,66 +452,62 @@ def controlMovementEyes():
 
             if emma_sleep == 1:
                 pass
-
             else:
-
-                # print(f"eyes: {eyesX} {eyesY}")
                 if eyesX <= -100:
-                    Servo_PWM_1.ChangeDutyCycle(4)
+                    Servo_PWM_1.ChangeDutyCycle(4.5)
                 
                 elif eyesX < -75:
-                    Servo_PWM_1.ChangeDutyCycle(4.5)
+                    Servo_PWM_1.ChangeDutyCycle(4.75)
 
                 elif eyesX < -50:
                     Servo_PWM_1.ChangeDutyCycle(5)
                 
                 elif eyesX < -25:
-                    Servo_PWM_1.ChangeDutyCycle(5.5)
+                    Servo_PWM_1.ChangeDutyCycle(5.25)
 
                 elif eyesX < 0:
-                    Servo_PWM_1.ChangeDutyCycle(6)
+                    Servo_PWM_1.ChangeDutyCycle(5.5)
 
                 elif eyesX < 25:
-                    Servo_PWM_1.ChangeDutyCycle(6.5)
+                    Servo_PWM_1.ChangeDutyCycle(5.75)
 
                 elif eyesX < 50:
-                    Servo_PWM_1.ChangeDutyCycle(7)
+                    Servo_PWM_1.ChangeDutyCycle(6)
 
                 elif eyesX < 75:
-                    Servo_PWM_1.ChangeDutyCycle(7.5)
+                    Servo_PWM_1.ChangeDutyCycle(6.25)
 
                 elif eyesX > 75:
-                    Servo_PWM_1.ChangeDutyCycle(8)
+                    Servo_PWM_1.ChangeDutyCycle(6.5)
 
                 #  EYES Y
 
                 if eyesY <= -100:
-                    Servo_PWM_2.ChangeDutyCycle(4)
+                    Servo_PWM_2.ChangeDutyCycle(8)
                 
                 elif eyesY < -75:
-                    Servo_PWM_2.ChangeDutyCycle(4.5)
+                    Servo_PWM_2.ChangeDutyCycle(7.75)
 
                 elif eyesY < -50:
-                    Servo_PWM_2.ChangeDutyCycle(5)
+                    Servo_PWM_2.ChangeDutyCycle(7.5)
                 
                 elif eyesY < -25:
-                    Servo_PWM_2.ChangeDutyCycle(5.5)
+                    Servo_PWM_2.ChangeDutyCycle(7.25)
 
                 elif eyesY < 0:
-                    Servo_PWM_2.ChangeDutyCycle(6)
-
-                elif eyesY < 25:
-                    Servo_PWM_2.ChangeDutyCycle(6.5)
-
-                elif eyesY < 50:
                     Servo_PWM_2.ChangeDutyCycle(7)
 
+                elif eyesY < 25:
+                    Servo_PWM_2.ChangeDutyCycle(6.75)
+
+                elif eyesY < 50:
+                    Servo_PWM_2.ChangeDutyCycle(6.5)
+
                 elif eyesY < 75:
-                    Servo_PWM_2.ChangeDutyCycle(7.5)
+                    Servo_PWM_2.ChangeDutyCycle(6.25)
 
                 elif eyesY > 75:
-                    Servo_PWM_2.ChangeDutyCycle(8)
-
+                    Servo_PWM_2.ChangeDutyCycle(6)
 
             sleep(0.2)
     except IOError as e:
@@ -483,31 +523,35 @@ def controlMovementEyeLid():
             global wink_right_status
             global wink_both_status
             global emma_sleep
+            global speed_eyes
 
             sleep(0.01)
 
             if emma_sleep == 1:
-                Servo_PWM_3.ChangeDutyCycle(2)
-                Servo_PWM_4.ChangeDutyCycle(9)
+                Servo_PWM_3.ChangeDutyCycle(7)
+                Servo_PWM_4.ChangeDutyCycle(3)
 
             else:  
                 # print(f"{wink_left_status} {wink_right_status} {wink_both_status}")
                 if wink_left_status == 1:
+                    Servo_PWM_3.ChangeDutyCycle(7)
+                    print(speed_eyes)
+                    sleep(speed_eyes)
                     Servo_PWM_3.ChangeDutyCycle(2)
-                    sleep(0.8)
-                    Servo_PWM_3.ChangeDutyCycle(8)
 
                 elif wink_right_status == 1:
-                    Servo_PWM_4.ChangeDutyCycle(9)
-                    sleep(0.8)
-                    Servo_PWM_4.ChangeDutyCycle(2)
+                    Servo_PWM_4.ChangeDutyCycle(3)
+                    print(speed_eyes)
+                    sleep(speed_eyes)
+                    Servo_PWM_4.ChangeDutyCycle(8)
 
                 elif wink_both_status == 1:
+                    Servo_PWM_3.ChangeDutyCycle(7)
+                    Servo_PWM_4.ChangeDutyCycle(3)
+                    print(speed_eyes)
+                    sleep(speed_eyes)
                     Servo_PWM_3.ChangeDutyCycle(2)
-                    Servo_PWM_4.ChangeDutyCycle(9)
-                    sleep(0.8)
-                    Servo_PWM_3.ChangeDutyCycle(8)
-                    Servo_PWM_4.ChangeDutyCycle(2)
+                    Servo_PWM_4.ChangeDutyCycle(8)
 
                 wink_left_status = 0
                 wink_right_status = 0
@@ -585,35 +629,54 @@ async def preset_function(status):
 
     if status == "0":
         emma_sleep = 0
+        return {"Status": "awake"}
         
     elif status == "1":
         emma_sleep = 1
         wink_both_status = 1
-        
-
+        return {"Status": "sleep"}
     else:
         return {"Status": "Invalid sleepstatus"}
 
 
 @app.get("/movement/head/{Xhead}/{Yhead}")
-async def read_sensors(Xhead, Yhead):
+async def read_head(Xhead, Yhead):
     global headX
     global headY
     headX = float(Xhead)
     headY = float(Yhead)
 
     # printPositions()
-    return {"Status": "ok", "Action": "Moving head and eyes"}
+    return {"Status": "ok", "Action": "Moving head"}
 
 @app.get("/movement/eyes/{Xeyes}/{Yeyes}")
-async def read_sensors(Xeyes, Yeyes):
+async def read_eyes(Xeyes, Yeyes):
     global eyesX
     global eyesY
     eyesX = float(Xeyes)
     eyesY = float(Yeyes)
 
     # printPositions()
-    return {"Status": "ok", "Action": "Moving head and eyes"}
+    return {"Status": "ok", "Action": "Moving eyes"}
+
+@app.get("/eyes/{speed}")
+async def define_speed_eyes(speed):
+    global speed_eyes
+    speed_eyes = float(speed)
+
+    # printPositions()
+    return {"Status": "ok", "Action": "Speed eyes"}
+
+@app.get("/inverted/{state}")
+async def inverted_state(state):
+    global inverted
+    if state == true:
+        inverted = True
+    else:
+        inverted = False
+
+    # printPositions()
+    return {"Status": "ok", "Action": "Speed eyes"}
 
 # @app.get("/function/{Xhead}/{Yhead}/{Xeyes}/{Yeyes}")
 # async def read_sensors(Xhead, Yhead, Xeyes, Yeyes):

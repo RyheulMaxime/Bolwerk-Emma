@@ -296,7 +296,7 @@ input::placeholder {
 input[type=range] {
     height: 32px;
     -webkit-appearance: none;
-    margin: 10px 0;
+    /* margin: 10px 0; */
     width: 100%;
   }
   input[type=range]:focus {
@@ -739,9 +739,10 @@ input[type=range] {
 }
 
 .c-settings--knipogen{
-    display: flex;
+    display: grid;
     justify-content: space-between;
     align-items: center;
+    grid-template-rows: 0.5fr 1fr;
 }
 
 .c-settings--knipogen--label{
@@ -749,13 +750,22 @@ input[type=range] {
 }
 
 .c-settings--knipogen--end{
-    display: flex;
+    display: grid;
+    grid-template-columns: 200px 48px 24px;
+    padding: 0;
+    align-items: center;
 }
 
 .c-settings--knipogen--input{
     display: block;
     width: 48px;
-    margin-right: var(--global-whitespace-sm);
+    margin: 0;
+    /* margin-right: var(--global-whitespace-sm); */
+}
+
+.c-settings--knipogen--tijd{
+    justify-self: end;
+    /* margin-right: var(--global-whitespace-sm); */
 }
 
 /*
